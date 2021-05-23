@@ -4,6 +4,7 @@
     padding: 0px;
     margin: 0px;
 }
+
 .logo {
     float: left;
     color: #fff;
@@ -12,4 +13,28 @@
     padding-left: 8px;
     text-decoration-line: none;
     padding-top: 14px;
+}
+
+.searchBox {
+    height: 35px;
+    border-radius: 4px;
+    width: 300px;
+    float: left;
+    background-color: #c0c0c0;
+    margin: 10px;
+    margin-left: 850px;
+}
+
+.app-logo{
+    height: 30px;
+    padding: 5px;
+}
+
+.searchText{
+    padding-bottom: 0px;
+}
+
+.formControl {
+    width: 150px;
+     height: 30px;
 }
