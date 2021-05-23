@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import './Login.css';
 import Header from '../../common/header/Header';
+import Home from '../../screens/home/Home';
 import { Button, Card, CardContent, FormControl, FormHelperText, Input, InputLabel, Typography } from '@material-ui/core';
 
 
@@ -10,8 +12,12 @@ class Login extends Component {
         super();
         this.state = {
             username: "",
+            password: "",
             reqUsername: "dispNone",
+            reqPassword: "dispNone",
             error: "dispNone",
+            loginSucess: false,
+            loggedIn: sessionStorage.getItem("access_token") == null ? false : true,
         }
     }
 
@@ -27,17 +33,18 @@ class Login extends Component {
     }
 
     loginButtonHandler = () => {
-        this.state.username ==="" ? this.setState({ reqUsername: "dispBlock" }) : this.setState({ reqUsername: "dispNone" });
-        this.state.password ==="" ? this.setState({ reqPassword: "dispBlock" }) : this.setState({ reqPassword: "dispNone" });
+        this.state.username === "" ? this.setState({ reqUsername: "dispBlock" }) : this.setState({ reqUsername: "dispNone" });
+        this.state.password === "" ? this.setState({ reqPassword: "dispBlock" }) : this.setState({ reqPassword: "dispNone" });
         let usernameCorrect = "admin";
         let passwordCorrect = "admin";
-        if(this.state.username === usernameCorrect && this.state.password === passwordCorrect) {
+        if (this.state.username === usernameCorrect && this.state.password === passwordCorrect) {
             sessionStorage.setItem('access_token', '8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784');
             console.log(sessionStorage.getItem('access_token'));
-        }else {
-            if(this.state.username !== "" && this.state.password !== "") {
-                this.setState({error: "dispBlock"});
-            }
+            ReactDOM.render(<Home baseUrl={this.props.baseUrl} />, document.getElementById('root'));
+        }
+        else {
+            if (this.state.username !== "" && this.state.password !== "")
+                this.setState({ error: "dispBlock" });
         }
     }
 
@@ -60,8 +67,8 @@ class Login extends Component {
 
                         <FormControl required className="formControl">
                             <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input id="password" type="password"  />
-                            <FormHelperText className={this.state.reqUsername}><span className="red">required</span></FormHelperText>
+                            <Input id="password" type="password" password={this.state.password}  onChange={this.inputPasswordChangeHandler}/>
+                            <FormHelperText className={this.state.reqPassword}><span className="red">required</span></FormHelperText>
                         </FormControl><br/><br/>
 
                         <FormControl required className="formControl">
