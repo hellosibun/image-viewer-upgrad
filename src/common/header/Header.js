@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './Header.css';
 import SearchIcon from '@material-ui/icons/Search';
 import { Redirect } from 'react-router';
+import logo from '../../assets/logo.png';
 
 const styles = (theme => ({
   menuList: {
@@ -83,7 +84,7 @@ class Header extends Component {
             <span>
               <IconButton className="iconBtn" size="medium" onClick={event => this.onProfileIconClickHandler(event)}>
                 <Avatar className="avatar">
-                  <img className="profilePic" src={this.props.profilePic}
+                  <img className="profilePic" src={logo}
                     alt="logged in user profile pic" />
                 </Avatar>
               </IconButton>
