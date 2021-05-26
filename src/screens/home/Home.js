@@ -89,7 +89,7 @@ const Home = props => {
         } else {
             props.history.push("/");
         }
-    }, []);
+    }, [props.history]);
 
     useEffect(() => {
         localStorage.dataSetOrg = JSON.stringify(homeDetails);
