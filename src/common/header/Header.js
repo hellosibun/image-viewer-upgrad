@@ -1,107 +1,106 @@
-import { Avatar, Divider, FormControl, IconButton, Input, Menu, MenuItem, withStyles } from '@material-ui/core';
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import './Header.css';
-import SearchIcon from '@material-ui/icons/Search';
-import { Redirect } from 'react-router';
-import logo from '../../assets/logo.png';
+import React from "react";
+import {
+  TextField,
+  Button,
+  Menu,
+  MenuItem,
+  InputAdornment
+} from "@material-ui/core";
+import { Search } from "@material-ui/icons";
+import avatar from "../../assets/images/user.png";
+import "./Header.css";
 
-const styles = (theme => ({
-  menuList: {
-    width: 150,
-    padding: 0,
-    marginLeft: 7,
-  },
-}))
+const Header = props => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-class Header extends Component {
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
 
-  constructor() {
-    super();
-    this.state = {
-      menuIsOpen: false,
-      loggedIn: sessionStorage.getItem("access_token") == null ? false : true,
-      anchorEl: null,
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  //Redirect to profile page
+  const loadProfilePage = () => {
+    props.props.history.push("/profile");
+  };
+
+  //Redirect to home page
+  const loadHomePage = () => {
+    if(props.isProfile){
+      props.props.history.push("/home");
     }
-  }
+    
+  };
 
-  // Modal Handler methods for opening and menu list on defined action events
+  // Clearing the session storage and local storage on logout
+  const logout = () => {
+    sessionStorage.userAuth = "";
+    localStorage.clear();
+    props.props.history.push("/");
+  };
 
+  return (
+    <header>
+      <div className="header-container">
+        <div className="header-title" onClick={loadHomePage}>
+          Image Viewer
+        </div>
+        <div className="header-action">
+          {props.isHome ? (
+            <TextField
+              id="input-with-icon-textfield"
+              placeholder="Search..."
+              variant="filled"
+              value={props.value}
+              onChange={props.onChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                )
+              }}
+            />
+          ) : (
+            ""
+          )}
+          {props.isHome || props.isProfile ? (
+            <div className="avatar">
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <img src={avatar} alt="avatar" />
+              </Button>
+              <Menu
+                id="simple-menu"
+                elevation={0}
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {!props.isProfile ? (
+                  <MenuItem onClick={loadProfilePage}>My Account</MenuItem>
+                ) : (
+                  ""
+                )}
 
-  openMenuHandler = () => {
-    this.setState({ menuIsOpen: true });
-  }
+                {!props.isProfile && <hr />}
 
-  closeMenuHandler = () => {
-    this.setState({ menuIsOpen: false });
-  }
-
-  // click event to execute logout function
-  logoutClickHandler = () => {
-    sessionStorage.removeItem("access_token");
-    this.setState({ loggedIn: false });
-  }
-
-  onProfileIconClickHandler = (event) => {
-    this.state.anchorEl ? this.setState({ anchorEl: null }) :
-      this.setState({ anchorEl: event.currentTarget });
-    this.openMenuHandler();
-  }
-
-  accountClickHandler = () => {
-    ReactDOM.render(<div></div>,document.getElementById('root'));
-  }
-
-  goToLoginPage = () => {
-    if(this.state.loggedIn === false) {
-      return <Redirect to ="/"/>
-    }
-  }
-
-
-  render() {
-    return (
-      <div>
-        
-        <header className="app-header">
-          <a className="logo" href="/home">Image Viewer</a>
-
-          {/* added search bar */}
-          {this.props.showSearchBox === "true" ?
-            <div className="searchBox">
-              {/* <img src={logo} className="app-logo" alt="search logo"/> */}
-              <SearchIcon />
-              <FormControl className="formControl">
-
-                <Input className="searchText" type="text" placeholder="Search..." disableUnderline={true}
-                  onChange={this.props.searchChangeHandler} />
-              </FormControl>
-            </div> : ""}
-
-          {/*User Profile Icon*/}
-
-          {this.props.loggedIn === true ?
-            <span>
-              <IconButton className="iconBtn" size="medium" onClick={event => this.onProfileIconClickHandler(event)}>
-                <Avatar className="avatar">
-                  <img className="profilePic" src={logo}
-                    alt="logged in user profile pic" />
-                </Avatar>
-              </IconButton>
-
-              {/* Menulist added to click event on profile pic icon of logged in user */}
-              <Menu className="menubar" anchorEl={this.state.anchorEl}
-              open={this.state.menuIsOpen} onClose={this.closeMenuHandler}>
-                {this.props.showAccount === "true" ?
-                  <div>
-                    <MenuItem onClick={this.accountClickHandler}>My Account</MenuItem><Divider variant="middle"/>
-                  </div> : ""}
-                  <MenuItem onClick={this.logoutClickHandler}>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
-            </span> : ""}
-        </header> <br/>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-    )
-  }
-}
-export default withStyles(styles)(Header);
+    </header>
+  );
+};
+
+export default Header;

@@ -1,88 +1,55 @@
-.app-header {
-    background-color: #263238;
-    height: 55px;
-    padding: 0px;
-    margin: 0px;
+header {
+    background: #263238;
+    color: white;
+    font-size: 18px;
+    padding: 0px 15px;
+    height: 51px;
 }
 
-/* Styles added for Search box implemented */
-
-.searchBox {
-    height: 35px;
-    border-radius: 4px;
-    width: 300px;
-    float: left;
-    background-color: #c0c0c0;
-    margin: 10px;
-    margin-left: 850px;
-}
-
-.app-logo{
-    height: 30px;
-    padding: 5px;
-}
-
-.searchText{
-    padding-bottom: 0px;
-    margin-top: -26px;
-    margin-left: 26px;
-}
-
-.formControl {
-    width: 150px;
-     height: 30px;
-}
-
-.profilePic {
-    float: right;
-}
-
-/* Styles added for user profile icon implemented */
-
-
-.logo {
-    float: left;
-    color: #fff;
-    font-weight: 18px;
-    justify-content: center;
-    padding-left: 8px;
-    text-decoration-line: none;
-    padding-top: 14px;
-}
-
-.iconBtn{
-    float: right;
-    width: 40px;
-    justify-content: center;
-    margin-bottom: 10px;
+.header-title {
+    font-size: 20px;
     cursor: pointer;
 }
 
-.profilePic {
-   width: 40px;
-   margin-right: 20px;
-   height: 40px;
-   margin-right: 0px;
-   margin-left: 0px;
-   
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
-.avatar {
-    margin-left: auto;
+.header-action {
+    display: flex;
+    align-items: center;
+}
+
+.header-action > .MuiFormControl-root {
+    background-color: #a8adaf;
+    border-radius: 5px;
     margin-right: 20px;
-    justify-content: center;
-    margin-bottom: 5px;
-   }
-
-.menuBar {
-    position: absolute;
-    background-color: grey;
-    color: black;
-    padding-top: 20px;
 }
 
-.menuList{
-    width: 200px;
+.MuiFilledInput-underline:after {
+    border-bottom: unset !important;
 }
 
+.MuiInputAdornment-root {
+    margin-top: 0px !important;
+}
 
+#input-with-icon-textfield {
+    padding: 5px !important;
+}
+
+.avatar >button> span>img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+#simple-menu>.MuiPaper-root {
+    background-color: #dfdfdf !important;
+}
+#simple-menu>.MuiPaper-root >ul>hr {
+    margin: 0px 10px ;
+}
